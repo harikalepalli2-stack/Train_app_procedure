@@ -1,22 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-// Reusing Bogie class from UC7
-class Bogie {
-    String name;
-    int capacity;
-
-    Bogie(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
-    }
-
-    @Override
-    public String toString() {
-        return name + " -> Capacity: " + capacity;
-    }
-}
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class Train_app_procedure {
 
@@ -24,25 +7,37 @@ public class Train_app_procedure {
 
         System.out.println("=== Train Consist Management App ===");
 
-        // Create list of bogies
-        List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 56));
-        bogies.add(new Bogie("First Class", 40));
-        bogies.add(new Bogie("Luxury AC", 80));
+        // Sample inputs (can be replaced with Scanner input if needed)
+        String trainId = "TRN-1234";
+        String cargoCode = "PET-AB";
 
-        // Filter bogies with capacity > 60
-        List<Bogie> highCapacityBogies = bogies.stream()
-                .filter(b -> b.capacity > 60)
-                .collect(Collectors.toList());
+        // Regex patterns
+        String trainIdPattern = "TRN-\\d{4}";
+        String cargoCodePattern = "PET-[A-Z]{2}";
 
-        // Display filtered bogies
-        System.out.println("\nBogies with capacity > 60:");
-        highCapacityBogies.forEach(System.out::println);
+        // Compile patterns
+        Pattern trainPattern = Pattern.compile(trainIdPattern);
+        Pattern cargoPattern = Pattern.compile(cargoCodePattern);
 
-        // Verify original list unchanged
-        System.out.println("\nOriginal Bogie List:");
-        bogies.forEach(System.out::println);
+        // Create matchers
+        Matcher trainMatcher = trainPattern.matcher(trainId);
+        Matcher cargoMatcher = cargoPattern.matcher(cargoCode);
+
+        // Validate Train ID
+        System.out.println("\nTrain ID Validation:");
+        if (trainMatcher.matches()) {
+            System.out.println(trainId + " is VALID");
+        } else {
+            System.out.println(trainId + " is INVALID");
+        }
+
+        // Validate Cargo Code
+        System.out.println("\nCargo Code Validation:");
+        if (cargoMatcher.matches()) {
+            System.out.println(cargoCode + " is VALID");
+        } else {
+            System.out.println(cargoCode + " is INVALID");
+        }
 
         // Program continues...
     }
