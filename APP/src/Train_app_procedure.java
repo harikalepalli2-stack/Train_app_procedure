@@ -1,8 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-// Reusing Bogie class from UC7
+// Reusing Bogie class
 class Bogie {
     String name;
     int capacity;
@@ -18,27 +17,25 @@ class Bogie {
     }
 }
 
-public class Train_app_procedure {
+public class TrainApp {
 
     public static void main(String[] args) {
 
         System.out.println("=== Train Consist Management App ===");
 
-        // Create list of bogies
+        // Create bogie list
         List<Bogie> bogies = new ArrayList<>();
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 56));
         bogies.add(new Bogie("First Class", 40));
-        bogies.add(new Bogie("Luxury AC", 80));
 
-        // Filter bogies with capacity > 60
-        List<Bogie> highCapacityBogies = bogies.stream()
-                .filter(b -> b.capacity > 60)
-                .collect(Collectors.toList());
+        // Aggregate total seating capacity using Stream
+        int totalCapacity = bogies.stream()
+                .map(b -> b.capacity)          // extract capacity
+                .reduce(0, Integer::sum);      // sum all values
 
-        // Display filtered bogies
-        System.out.println("\nBogies with capacity > 60:");
-        highCapacityBogies.forEach(System.out::println);
+        // Display result
+        System.out.println("\nTotal Seating Capacity: " + totalCapacity);
 
         // Verify original list unchanged
         System.out.println("\nOriginal Bogie List:");
